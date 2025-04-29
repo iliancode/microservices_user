@@ -69,10 +69,25 @@ const listRestaurants = async (req, res) => {
     }
 };
 
+const getRestaurantById = async (req, res) => {
+    try {
+      const [user] = await  pool.query("SELECT * FROM users WHERE id = ? and role='restaurant'", [req.params.id]);
+        if (user.length === 0) {
+            return res.status(404).json({ message: 'Utilisateur non trouvé' });
+            }
+  
+ 
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({ message: 'Erreur serveur', error: error.message });
+    }
+  };
+
 module.exports = {
     register,
     login,
     getMe,
     deleteUser,
-    listRestaurants
+    listRestaurants, 
+    getRestaurantById
 };
