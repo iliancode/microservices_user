@@ -10,7 +10,7 @@ router.get('/me', protect, getMe);
 
 router.delete('/:id', protect, authorize('admin'), deleteUser);
 router.get('/all', listRestaurants);
-router.get('/allLivreurs', protect, authorize('admin'), listLivreurs);
+router.get('/allLivreurs', protect, listLivreurs);
 // Route pour récupérer un restaurant par son ID
 router.get('/:id', getRestaurantById);
 
