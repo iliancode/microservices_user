@@ -66,6 +66,16 @@ const listRestaurants = async (req, res) => {
   }
 };
 
+const listLivreurs = async (req, res) => {
+    try {
+      const restaurants = await userModel.findAllLivreurs();
+      res.json(restaurants);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+  
+
 const getRestaurantById = async (req, res) => {
   try {
     const user = await userModel.findRestaurantById(req.params.id);
@@ -82,5 +92,6 @@ module.exports = {
   getMe,
   deleteUser,
   listRestaurants,
-  getRestaurantById
+  getRestaurantById,
+  listLivreurs
 };

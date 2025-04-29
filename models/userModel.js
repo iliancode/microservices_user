@@ -38,6 +38,12 @@ const findRestaurantById = async (id) => {
   return rows[0];
 };
 
+// Liste tous les livreurs
+const findAllLivreurs = async () => {
+  const [rows] = await pool.query("SELECT * FROM users WHERE role = 'livreur'");
+  return rows;
+};
+
 module.exports = {
   findUserByEmail,
   createUser,
@@ -45,4 +51,5 @@ module.exports = {
   deleteUserById,
   findAllRestaurants,
   findRestaurantById,
+  findAllLivreurs
 };
