@@ -73,6 +73,11 @@ const findByUserId = async(userId, role) => {
   return orders;
 };
 
+const getAllMenus = async () => {
+  const [rows] = await pool.query('SELECT * FROM menu_items');
+  return rows;
+};
+
 module.exports = {
   findUserByEmail,
   createUser,
@@ -81,5 +86,6 @@ module.exports = {
   findAllRestaurants,
   findRestaurantById,
   findAllLivreurs,
-  findByUserId
+  findByUserId,
+  getAllMenus
 };

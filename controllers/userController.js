@@ -99,6 +99,16 @@ const getUserOrders = async(req, res) => {
   }
 };
 
+const getAllMenus = async (req, res) => {
+  try {
+    console.log('Fetching all menus');
+    const menus = await userModel.getAllMenus();
+    res.json(menus);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -107,5 +117,6 @@ module.exports = {
   listRestaurants,
   getRestaurantById,
   listLivreurs,
-  getUserOrders
+  getUserOrders,
+  getAllMenus
 };

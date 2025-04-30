@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login, getMe, deleteUser, listRestaurants , getRestaurantById, listLivreurs, getUserOrders } = require('../controllers/userController');
+const { register, login, getMe, deleteUser, listRestaurants , getRestaurantById, listLivreurs, getUserOrders, getAllMenus } = require('../controllers/userController');
 const { protect, authorize } = require('../middlewares/authMiddleware'); 
 
 const router = express.Router();
@@ -7,6 +7,7 @@ const router = express.Router();
 router.post('/register', register);
 router.post('/login', login);
 router.get('/me', protect, getMe);
+router.get('/menu', getAllMenus);
 
 router.get('/orders', protect, getUserOrders);
 router.delete('/:id', protect, authorize('admin'), deleteUser);
