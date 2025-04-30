@@ -78,6 +78,11 @@ const getAllMenus = async () => {
   return rows;
 };
 
+const getMenuByRestaurant = async (restaurantId) => {
+  const [rows] = await pool.query('SELECT * FROM menu_items WHERE restaurant_id = ?', [restaurantId]);
+  return rows;
+};
+
 module.exports = {
   findUserByEmail,
   createUser,
@@ -87,5 +92,6 @@ module.exports = {
   findRestaurantById,
   findAllLivreurs,
   findByUserId,
-  getAllMenus
+  getAllMenus,
+  getMenuByRestaurant
 };

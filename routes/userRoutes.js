@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login, getMe, deleteUser, listRestaurants , getRestaurantById, listLivreurs, getUserOrders, getAllMenus } = require('../controllers/userController');
+const { register, login, getMe, deleteUser, listRestaurants , getRestaurantById, listLivreurs, getUserOrders, getAllMenus, getAllMenusByRestaurant } = require('../controllers/userController');
 const { protect, authorize } = require('../middlewares/authMiddleware'); 
 
 const router = express.Router();
@@ -16,6 +16,7 @@ router.get('/allLivreurs', protect, listLivreurs);
 router.get('/:id', getRestaurantById);
 
 router.get('/menu', getAllMenus);
+router.get('/menu/:restaurant_id', getAllMenusByRestaurant);
 router.get('/orders', protect, getUserOrders);
 
 module.exports = router;
