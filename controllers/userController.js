@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
+const e = require('express');
 
 const register = async (req, res) => {
   const { firstname, lastname, email, password, role, adress, phone } = req.body;
@@ -86,6 +87,18 @@ const getRestaurantById = async (req, res) => {
   }
 };
 
+const getUserOrders = async(req, res) => {
+  const user = req.user;
+  console.log('User ID:', user);
+  try {
+    const orders = await userModel.findByUserId(user.id, user.role);
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -93,5 +106,6 @@ module.exports = {
   deleteUser,
   listRestaurants,
   getRestaurantById,
-  listLivreurs
+  listLivreurs,
+  getUserOrders
 };

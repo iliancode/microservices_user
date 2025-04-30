@@ -1,4 +1,5 @@
 const pool = require('../config/db');
+const db = require('../config/db');
 
 // Vérifie si un utilisateur existe par email
 const findUserByEmail = async (email) => {
@@ -44,6 +45,34 @@ const findAllLivreurs = async () => {
   return rows;
 };
 
+const findByUserId = async(userId, role) => {
+  let orders;
+  if (role === 'client') {
+    [orders] = await db.execute(
+      'SELECT * FROM orders WHERE client_id = ?',
+      [userId]
+    );
+  } else if (role === 'livreur') {
+    [orders] = await db.execute(
+      `SELECT * FROM orders
+       WHERE delivery_person_id = ? OR delivery_person_id IS NULL`,
+      [userId]
+    );
+  } else {
+    return [];
+  }
+
+  for (const order of orders) {
+    const [items] = await db.execute(
+      'SELECT menu_item_id, quantity, item_status FROM order_items WHERE order_id = ?',
+      [order.id]
+    );
+    order.items = items;
+  }
+
+  return orders;
+};
+
 module.exports = {
   findUserByEmail,
   createUser,
@@ -51,5 +80,6 @@ module.exports = {
   deleteUserById,
   findAllRestaurants,
   findRestaurantById,
-  findAllLivreurs
+  findAllLivreurs,
+  findByUserId
 };
